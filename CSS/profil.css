@@ -1,0 +1,123 @@
+/* עיצוב כללי ואיפוס דפדפן - תואם לשאר האתר */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+    --bg-deep: #0d0d12;
+    --bg-glow: #1e1b4b;
+    --panel: rgba(22, 22, 30, 0.85);
+    --panel-light: rgba(255, 255, 255, 0.04);
+    --border-soft: rgba(255, 255, 255, 0.08);
+    --indigo: #6366f1;
+    --indigo-dark: #4f46e5;
+    --teal: #2dd4bf;
+    --teal-glow: rgba(45, 212, 191, 0.35);
+    --amber: #f59e0b;
+    --danger: #ef4444;
+    --text-main: #f3f4f6;
+    --text-dim: #9ca3af;
+}
+
+html {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+body {
+    /* מקום מוכן לתמונת רקע - כרגע רק גרדיאנט כהה.
+       כשתהיה לך תמונה, פשוט תוסיף שורה נוספת בתוך background-image
+       (מופרדת בפסיק אחרי הגרדיאנט), בדיוק כמו בעמוד המוקשים:
+
+       background-image:
+           radial-gradient(circle at 50% 20%, rgba(30, 27, 75, 0.55) 0%, rgba(13, 13, 18, 0.85) 70%),
+           url('../images/YOUR-FILE-NAME.jpg');
+    */
+    background-image: radial-gradient(circle at 50% 20%, var(--bg-glow) 0%, var(--bg-deep) 70%);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-color: var(--bg-deep);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-main);
+    direction: rtl;
+    padding: 40px 16px;
+}
+
+/* כרטיס הפרופיל */
+.information {
+    background: var(--panel);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-soft);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 2px rgba(99, 102, 241, 0.2);
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+}
+
+/* שם המשתמש */
+#userName {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--indigo) 0%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 4px;
+}
+
+/* כותרת המשנה */
+.information h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-soft);
+    width: 100%;
+}
+
+/* אימייל - קצת מופרד ויזואלית מהסטטיסטיקות */
+#userEmail {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+}
+
+/* שורות הסטטיסטיקה */
+.information p:not(#userEmail) {
+    width: 100%;
+    background: var(--panel-light);
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--teal);
+    text-align: right;
+}
+
+/* הדגשה לשיא המהירות */
+#highScore {
+    color: var(--amber) !important;
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.15);
+}
+
+/* הדגשה לאחוז ההצלחה */
+#successRate {
+    color: var(--indigo) !important;
+}

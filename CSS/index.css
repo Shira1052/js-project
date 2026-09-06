@@ -1,0 +1,185 @@
+/* עיצוב כללי ואיפוס דפדפן - תואם לשאר האתר */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+    --bg-deep: #0d0d12;
+    --bg-glow: #1e1b4b;
+    --panel: rgba(22, 22, 30, 0.85);
+    --panel-light: rgba(255, 255, 255, 0.04);
+    --border-soft: rgba(255, 255, 255, 0.08);
+    --indigo: #6366f1;
+    --indigo-dark: #4f46e5;
+    --teal: #2dd4bf;
+    --amber: #f59e0b;
+    --danger: #ef4444;
+    --text-main: #f3f4f6;
+    --text-dim: #9ca3af;
+}
+
+html {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+body {
+    background-image: radial-gradient(circle at 50% 20%, var(--bg-glow) 0%, var(--bg-deep) 70%);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-color: var(--bg-deep);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* החזרת ה-Header לחלק העליון */
+    align-items: center;
+    /* ממרכז אופקית */
+    color: var(--text-main);
+    direction: rtl;
+    padding: 40px 16px;
+}
+
+/* ==========================================
+   עיצוב ה-Header בחלק העליון
+   ========================================== */
+header {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 28px;
+    background: var(--panel);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-soft);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    margin-bottom: 50px;
+}
+
+/* כותרת העמוד */
+#title h2 {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--indigo) 0%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* אזור קישורי המשתמש - טקסט נקי ללא כפתורים */
+.User {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.User a,
+.User div {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: color 0.25s ease;
+}
+
+.User a:hover,
+.User div:hover {
+    color: var(--teal);
+    background: none;
+    border: none;
+    transform: none;
+}
+
+.User div:empty {
+    display: none;
+}
+
+/* ==========================================
+   גריד הכרטיסים
+   ========================================== */
+.container {
+    width: 100%;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    padding-top: 100px;
+    gap: 24px;
+}
+
+.container a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.container a>div {
+    position: relative;
+    height: 220px;
+    background-color: var(--panel);
+    border: 1px solid var(--border-soft);
+    border-radius: 24px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(8px);
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* תמונות רקע ייעודיות לכל משחק - עדכן את הנתיב לתמונה שלך כאן */
+.container a[href*="tic-tac-toe"]>div {
+    background-image: linear-gradient(to top, rgba(13, 13, 18, 0.456) 10%, rgba(13, 13, 18, 0.105)), url('../images/ח\ 1.png');
+}
+
+.container a[href*="memory"]>div {
+    background-image: linear-gradient(to top, rgba(13, 13, 18, 0.456) 10%, rgba(13, 13, 18, 0.105)), url('../images/ז\ חי.jpg');
+}
+
+.container a[href*="Minesweeper"]>div {
+    background-image: linear-gradient(to top, rgba(13, 13, 18, 0.456) 10%, rgba(13, 13, 18, 0.105)), url('../images/שולה\ חיצוני.png');
+}
+
+
+.container a>div:hover {
+    transform: translateY(-6px);
+    border-color: var(--indigo);
+    box-shadow: 0 20px 45px rgba(99, 102, 241, 0.25);
+}
+
+.container h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+
+.container a>div:hover h3 {
+    color: var(--teal);
+}
+
+.container p {
+    font-size: 14px;
+    color: var(--text-dim);
+    z-index: 2;
+}

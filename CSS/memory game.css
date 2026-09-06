@@ -1,0 +1,116 @@
+/* עיצוב כללי ואיפוס */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #0d0d12;
+    /* החליפי את הנתיב כאן לשם קובץ התמונה שלך */
+    background-image: url('../images/Gemini_Generated_Image_lw6taxlw6taxlw6t.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    direction: rtl;
+}
+
+h1 {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-weight: 400;
+    font-size: 2rem;
+    text-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    color: #a5b4fc;
+}
+
+/* אזור הבקרה (הקלט והכפתור) */
+#bAnda {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 20px 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 40px;
+    backdrop-filter: blur(10px);
+}
+
+/* הסרת חיצים מה-Input */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    background: #181824;
+    color: white;
+    width: 80px;
+    text-align: center;
+    font-size: 16px;
+    outline: none;
+}
+
+button {
+    padding: 10px 25px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+button:hover {
+    filter: brightness(1.2);
+    transform: translateY(-2px);
+}
+
+/* מיקוד וסידור הלוח */
+#container {
+    display: grid;
+    /* יצירת גריד שמתאים את עצמו למסך */
+    grid-template-columns: repeat(auto-fit, 80px);
+    justify-content: center;
+    /* ממקם את הקלפים במרכז ה-Container */
+    gap: 15px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    /* ממקם את ה-Container עצמו במרכז המסך */
+}
+
+/* עיצוב הקלפים */
+#container div {
+    aspect-ratio: 1 / 1;
+    background: #1e1e2e;
+    /* צבע כהה בסיסי */
+    border: 2px solid rgba(99, 102, 241, 0.2);
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: #a5b4fc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+/* אפקט ריחוף יוקרתי */
+#container div:hover {
+    border-color: #6366f1;
+    background: #252538;
+    transform: scale(1.05);
+}

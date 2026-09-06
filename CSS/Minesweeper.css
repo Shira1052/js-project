@@ -1,0 +1,285 @@
+/* עיצוב כללי ואיפוס דפדפן - תואם לעמוד ההרשמה */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+    --bg-deep: #0d0d12;
+    --bg-glow: #1e1b4b;
+    --panel: rgba(22, 22, 30, 0.85);
+    --panel-light: rgba(255, 255, 255, 0.04);
+    --border-soft: rgba(255, 255, 255, 0.08);
+    --indigo: #6366f1;
+    --indigo-dark: #4f46e5;
+    --teal: #2dd4bf;
+    --teal-glow: rgba(45, 212, 191, 0.35);
+    --amber: #f59e0b;
+    --danger: #ef4444;
+    --text-main: #f3f4f6;
+    --text-dim: #9ca3af;
+}
+
+body {
+    /* שכבת גרדיאנט כהה מעל התמונה, כדי שהטקסט והלוח יישארו קריאים,
+       ואז התמונה עצמה מתחת - שני 'background-image' מופרדים בפסיק,
+       הראשון מוצג מעל השני */
+    background-image:
+        radial-gradient(circle at 50% 20%, rgba(30, 27, 75, 0.484) 0%, rgba(13, 13, 18, 0.303) 70%),
+        url('../images/Gemini_Generated_Image_aacygcaacygcaacy.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-color: var(--bg-deep); /* גיבוי אם התמונה לא נטענת */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--text-main);
+    direction: rtl;
+    padding: 40px 16px;
+    gap: 20px;
+}
+
+/* מד הזמן */
+#timer {
+    background: var(--panel);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-soft);
+    padding: 10px 24px;
+    border-radius: 999px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--teal);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 20px var(--teal-glow);
+    text-align: center;
+    min-width: 80px;
+}
+
+/* לוח המשחק */
+.board {
+    display: grid;
+    gap: 6px;
+    background: var(--panel);
+    backdrop-filter: blur(12px);
+    padding: 18px;
+    border-radius: 24px;
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 2px rgba(99, 102, 241, 0.2);
+    max-width: 96vw;
+}
+
+/* תא סגור - נראה כמו כפתור בולט, מוכן ללחיצה */
+.cell {
+    aspect-ratio: 1 / 1;
+    min-width: 28px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    color: var(--teal);
+    font-size: clamp(12px, 2.4vw, 18px);
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.cell:hover:not(:disabled) {
+    background: linear-gradient(145deg, rgba(99, 102, 241, 0.28), rgba(99, 102, 241, 0.1));
+    border-color: var(--indigo);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+}
+
+.cell:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* תא פתוח - שקוע, שטוח, ברור שכבר נלחץ */
+.cell:disabled {
+    cursor: default;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    color: var(--teal);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* אופציונלי: אם תרצה צביעה בסגנון מיינסוויפר קלאסי לפי מספר,
+   אפשר להוסיף data-value="1..8" בקוד ה-JS ולהשתמש בכללים הבאים: */
+.cell[data-value="1"] { color: #60a5fa; }
+.cell[data-value="2"] { color: #34d399; }
+.cell[data-value="3"] { color: #f87171; }
+.cell[data-value="4"] { color: #a78bfa; }
+.cell[data-value="5"] { color: #fb923c; }
+.cell[data-value="6"] { color: #22d3ee; }
+.cell[data-value="7"] { color: #f3f4f6; }
+.cell[data-value="8"] { color: #9ca3af; }
+
+/* פיצוץ/מוקש - זוהר אדום-כתום בהשראת התמונה */
+.cell.mine {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.4);
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.35);
+    animation: pulse-danger 0.6s ease-in-out;
+}
+
+@keyframes pulse-danger {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+/* כפתורי רמת קושי */
+body > div:not(.board):not(#gameOver) {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+button {
+    padding: 12px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-dark) 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(79, 70, 229, 0.4);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(79, 70, 229, 0.55);
+    filter: brightness(1.1);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* כפתור "משחק חדש" - סגנון משני, נקי */
+#resete {
+    background: transparent;
+    color: #a5b4fc;
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    box-shadow: none;
+}
+
+#resete:hover {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--indigo);
+    box-shadow: none;
+}
+
+/* מסך סיום משחק - מכסה את כל העמוד */
+#gameOver:empty {
+    display: none;
+}
+
+/* השכבה הכהה שמכסה את כל העמוד - יושבת על ה-body, לא בתוך gameOver,
+   כדי לא להיתקל בבעיית containing-block שנוצרת מ-transform/backdrop-filter */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 998;
+    pointer-events: none; /* לא חוסם קליקים כשאין משחק שהסתיים */
+    background: transparent;
+}
+
+body:has(#gameOver:not(:empty))::before {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(6px);
+    pointer-events: auto; /* חוסם קליקים על הלוח מתחת, כשההודעה מוצגת */
+    animation: fade-in-backdrop 0.25s ease-out;
+}
+
+@keyframes fade-in-backdrop {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* הכרטיס עצמו - ממורכז מעל הרקע הכהה */
+#gameOver:not(:empty) {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    background: var(--panel);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-soft);
+    border-radius: 24px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 2px rgba(99, 102, 241, 0.2);
+    animation: fade-scale-in 0.35s ease-out;
+}
+
+@keyframes fade-scale-in {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.92) translateY(10px); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1) translateY(0); }
+}
+
+#gameOver h2 {
+    font-size: 24px;
+    color: #34d399; /* ניצחון - ירוק, ברירת מחדל */
+}
+
+/* למסך הפסד: CSS לא יודע לבדוק תוכן טקסט (אין :contains() אמיתי),
+   אז כדי לצבוע את הכותרת באדום במקרה של הפסד, הכי פשוט להוסיף
+   קלאס ב-JS, לדוגמה: gameOver.innerHTML = `<h2 class="lost">...` */
+#gameOver h2.lost {
+    color: var(--danger);
+}
+
+#gameOver h3 {
+    font-size: 16px;
+    color: var(--amber);
+}
+
+#gameOver h4 {
+    font-size: 15px;
+    color: var(--text-dim);
+    font-weight: 500;
+}
+
+#gameOver button,
+#gameOver a button {
+    width: 100%;
+}
+
+#gameOver a {
+    width: 100%;
+    text-decoration: none;
+}
+
+#gameOver a button {
+    background: transparent;
+    color: #a5b4fc;
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    box-shadow: none;
+}
+
+#gameOver a button:hover {
+    background: rgba(99, 102, 241, 0.1);
+    box-shadow: none;
+}

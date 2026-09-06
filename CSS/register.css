@@ -1,0 +1,139 @@
+/* עיצוב כללי ואיפוס דפדפן */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background: #0d0d12; /* רקע כהה עמוק ומקצועי */
+    background-image: 
+        radial-gradient(circle at 50% 30%, #1e1b4b 0%, #0d0d12 70%); /* הילה סגולה עמוקה ברקע */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #f3f4f6;
+    direction: rtl;
+    overflow: hidden;
+}
+
+/* עיצוב תיבת הטופס הראשי */
+.form {
+    background: rgba(22, 22, 30, 0.85); /* מראה חצי שקוף מודרני */
+    backdrop-filter: blur(12px); /* אפקט זכוכית מט */
+    padding: 40px 30px;
+    border-radius: 24px; /* פינות מעוגלות רכות ומודרניות */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
+                0 0 2px rgba(99, 102, 241, 0.2); /* צל עמוק עם הילה עדינה */
+    border: 1px solid rgba(255, 255, 255, 0.08); /* מסגרת דקה ויוקרתית */
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 400px;
+    gap: 20px;
+    text-align: center;
+    align-items: center;
+    transition: all 0.4s ease;
+}
+
+/* עיצוב שדות הקלט (Inputs) */
+.form input {
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* אפקט פוקוס יפה ויוקרתי בעת לחיצה על אינפוט */
+.form input:focus {
+    border-color: #6366f1; /* סגול אינדיגו מודרני */
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* שינוי צבע ה-Placeholder */
+.form input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* עיצוב פסקאות טקסט (כמו "לא נרשמתם עדיין?") */
+.form p {
+    font-size: 14px;
+    color: #9ca3af;
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
+/* עיצוב כללי לכל הכפתורים בטופס */
+.form button {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+/* הכפתור הראשי לפעולה (כניסה / הרשמה) - מראה גראדיאנט עשיר */
+.form button:first-of-type {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(79, 70, 229, 0.4);
+}
+
+.form button:first-of-type:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(79, 70, 229, 0.55);
+    filter: brightness(1.1);
+}
+
+.form button:first-of-type:active {
+    transform: translateY(0);
+}
+
+/* הכפתור המשני (כפתור המעבר התחתון) - נקי ולא מתאמץ */
+.form button:last-of-type {
+    background: transparent;
+    color: #a5b4fc;
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form button:last-of-type:hover {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: #6366f1;
+}
+
+/* 
+   טיפול מיוחד בהודעות המערכת מה-JS 
+   מכיוון שה-JS מחליף את כל התוכן בטקסט חופשי במצבי הצלחה/שגיאה
+*/
+.form {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* במידה וההודעה מודפסת כטקסט חופשי או פסקה אדומה בסוף הטופס */
+.form p:last-child {
+    color: #ef4444; /* צבע אדום שגיאה מודרני */
+    font-weight: 500;
+    animation: shake 0.3s ease-in-out;
+}
+
+/* אנימציית רטט קלה לשגיאות */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
